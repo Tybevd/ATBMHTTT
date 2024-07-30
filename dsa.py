@@ -22,6 +22,8 @@ def parameter_generation():
     while((p-1)%q!=0):
         q=getPrime(5)
         p=getPrime(10)
+    print("p=",p)
+    print("q=",q)
     flag=True
     while(flag):
         h=int(input("Enter integer(h) between 1 and p-1: "))
@@ -32,18 +34,16 @@ def parameter_generation():
             flag=False
         else:
             print("Wrong entry")
-    print("p=",p)
-    print("q=",q)
     print("g=",g)
     return(p,q,g)
-
+#Tạo khóa công khai y và khóa bí mật x
 def per_user_key(p,q,g):
     x=randint(1,q-1)
     print("x=",x)
     y=pow(g,x)%p
     print("y=",y)
     return(x,y)
-
+#Hàm kí thông điệp
 def signature(name,p,q,g,x):
     with open(name) as file:
         text=file.read()
@@ -56,12 +56,12 @@ def signature(name,p,q,g,x):
         r=(pow(g,k)%p)%q
         i=mod_inverse(k,q)
         hashed=int(hash_component,16)
-        hashed=67
         s=(i*(hashed+(x*r)))%q
 
     print("hashed=",hashed)
     print("i=",i)
     return(r,s,k)
+#Hàm xác nhận thông điệp
 def verification(name,p,q,g,r,s,y):
     with open(name) as file:
         text=file.read()
